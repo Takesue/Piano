@@ -26,21 +26,22 @@ import android.view.View.OnTouchListener;
 
 public class PianoActivity extends Activity implements OnTouchListener {
 
-	static final int numWk = 11, numBk = 7, numKeys = numWk + numBk;
-	Region[] kb = new Region[numKeys];
-	MediaPlayer[] key = new MediaPlayer[numKeys];
-	int sw, sh;
-	int[] activePointers = new int[numKeys];
-	Drawable  drawable_white, drawable_black, drawable_white_pressed, drawable_black_pressed;
-	Timer timer;
-	Bitmap bitmap_keyboard;
-	ImageView iv;
-	boolean[] lastPlayingNotes;
+	public static final int numWk = 11, numBk = 7, numKeys = numWk + numBk;
+	public Region[] kb = new Region[numKeys];
+	public MediaPlayer[] key = new MediaPlayer[numKeys];
+	public int sw, sh;
+	public int[] activePointers = new int[numKeys];
+	public Drawable  drawable_white, drawable_black, drawable_white_pressed, drawable_black_pressed;
+	public Timer timer;
+	public Bitmap bitmap_keyboard;
+	public ImageView iv;
+	public boolean[] lastPlayingNotes;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_piano);
+
 		TypedArray notes = getResources().obtainTypedArray(R.array.notes);
 		for(int i = 0; i < notes.length(); i++ ) {
 			int k = notes.getResourceId(i, -1);
@@ -50,11 +51,13 @@ public class PianoActivity extends Activity implements OnTouchListener {
 				this.key[i] = null;
 			}
 		}
+		
 		Resources res = this.getResources();
 		this.drawable_white=res.getDrawable(R.drawable.white);
 		this.drawable_black=res.getDrawable(R.drawable.black);
 		this.drawable_white_pressed=res.getDrawable(R.drawable.white_pressed);
 		this.drawable_black_pressed=res.getDrawable(R.drawable.black_pressed);
+		
 		Display disp =((WindowManager)this.getSystemService(
 				Context.WINDOW_SERVICE)).getDefaultDisplay();
 		this.sw = disp.getWidth();
@@ -72,7 +75,8 @@ public class PianoActivity extends Activity implements OnTouchListener {
 		int pointerIndex = event.getActionIndex();
 		float x = event.getX(pointerIndex);
 		float y = event.getY(pointerIndex);
-		for(int j = 0; j < PianoActivity.numKeys; j++){
+		
+		for( int j = 0; j < PianoActivity.numKeys; j++){
 			if(this.kb[j].contains((int)x, (int)y)) {
 				switch(event.getActionMasked()) {
 
